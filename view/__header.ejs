@@ -1,0 +1,22 @@
+<header class="header">
+  <h1 class="company-name">Placement Cell</h1>
+  <div class="header-left">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Students</a></li>
+        <li><a href="#">Interview</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="header-right">
+    <% if(locals.user) {%>
+    <span class="user-greeting">Hi, <%= user.name%></span>
+    <a href="/user/logout" class="login-link">Logout</a>
+    <%} else{%>
+
+    <a href="/user/login" class="login-link">Login</a>
+    <a href="/user/signup" class="signup-link">Sign Up</a>
+    <%}%>
+  </div>
+</header>

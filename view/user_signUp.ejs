@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="/css/form.css" />
+<div class="form-container">
+  <h2 class="form-title">Sign Up</h2>
+  <form action="/user/create" method="post">
+    <div class="form-group">
+      <label for="name" class="form-label">Name</label>
+      <input type="name" id="name" name="name" class="form-input" required />
+    </div>
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" name="email" class="form-input" required />
+    </div>
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-input"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="password" class="form-label">Confirm Password</label>
+      <input
+        type="password"
+        id="password"
+        name="confirm_password"
+        class="form-input"
+        required
+      />
+    </div>
+    <button type="submit" class="form-submit">Sign Up</button>
+  </form>
+  <div class="form-signup-link">
+    Already have an account? <a href="/user/login">Log In</a>
+  </div>
+</div>
