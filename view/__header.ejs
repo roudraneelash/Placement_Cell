@@ -3,9 +3,9 @@
   <div class="header-left">
     <nav>
       <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Students</a></li>
-        <li><a href="#">Interview</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/students">Students</a></li>
+        <li><a href="/interviews">Interview</a></li>
       </ul>
     </nav>
   </div>
@@ -13,6 +13,7 @@
     <% if(locals.user) {%>
     <span class="user-greeting">Hi, <%= user.name%></span>
     <a href="/user/logout" class="login-link">Logout</a>
+    <a href="/report" class="login-link">Download Report</a>
     <%} else{%>
 
     <a href="/user/login" class="login-link">Login</a>

@@ -1,0 +1,17 @@
+.Student {
+  margin: 2rem;
+  text-align: center;
+}
+.add-btn {
+  background-color: rgb(14, 149, 14);
+  margin: 2rem;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+}
+.add-btn:hover {
+  background-color: rgb(9, 182, 9);
+}
+.table-container {
+  text-align: left;
+}

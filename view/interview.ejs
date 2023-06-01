@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/css/student.css" />
+
+<div class="Student">
+  <h2>Interview List</h2>
+  <a href="/interviews/addNew" class="add-link">
+    <button class="add-btn">Schedule an Interview</button>
+  </a>
+
+  <% if (interviews == undefined || interviews.length === 0) { %>
+  <p>No interviews scheduled</p>
+  <% } else { %>
+  <div class="table-container">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Company Name</th>
+          <th scope="col">Add student</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < interviews.length; i++) { %>
+        <tr>
+          <th scope="row"><%= i + 1 %></th>
+          <td><%= interviews[i].companyName %></td>
+
+          <td>
+            <a href="/interviews/<%= interviews[i]._id %>">
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/material-outlined/24/preview-pane.png"
+                alt="preview-pane"
+              />
+            </a>
+          </td>
+          <td>
+            <a href="/interviews/delete/<%= interviews[i]._id %>">
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/sf-regular/48/filled-trash.png"
+                alt="filled-trash"
+              />
+            </a>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</div>

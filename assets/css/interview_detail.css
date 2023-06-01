@@ -1,0 +1,67 @@
+.interview-details {
+  margin: 2rem;
+}
+.add-student-form,
+.enrolled-students {
+  margin-top: 2rem;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  color: #555;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+select {
+  width: 100%;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}

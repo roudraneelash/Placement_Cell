@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/css/student_profile.css" />
+<h1>Student Profile</h1>
+<div class="profile">
+  <div class="profile-details">
+    <p><strong>Name:</strong> <%= student.studentName %></p>
+    <p><strong>Email:</strong> <%= student.studentEmail %></p>
+    <p><strong>College:</strong> <%= student.studentCollege %></p>
+    <p><strong>Placement Status:</strong> <%= student.placementStatus %></p>
+    <p><strong>Batch:</strong> <%= student.batchInput %></p>
+    <p><strong>DSA Score:</strong> <%= student.dsaScore %></p>
+    <p><strong>WebDev Score:</strong> <%= student.webdevScore %></p>
+    <p><strong>React Score:</strong> <%= student.reactScore %></p>
+  </div>
+  <div class="profile-actions">
+    <a href="/students/edit/<%= student._id %>">
+      <button class="edit-btn">Edit</button>
+    </a>
+    <a href="/students/delete/<%= student._id %>">
+      <button class="delete-btn">Delete</button>
+    </a>
+  </div>
+</div>
