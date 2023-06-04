@@ -1,47 +1,77 @@
 const Interview = require("../model/interview");
 const Student = require("../model/student");
-
-const createCsvWriter = require("csv-writer").createObjectCsvWriter;
+const json2csv = require("json2csv").parse;
+const fs = require("fs");
+const path = require("path");
 
 module.exports.home = (req, res) => {
   return res.redirect("/students");
 };
-module.exports.report = async (req, res) => {
-  const csvWriter = createCsvWriter({
-    path: "student_details.csv",
-    header: [
-      { id: "studentName", title: "Student Name" },
-      { id: "studentEmail", title: "Student Email" },
-      { id: "studentCollege", title: "Student College" },
-      { id: "placementStatus", title: "Placement Status" },
-      { id: "batchInput", title: "Batch" },
-      { id: "dsaScore", title: "DSA Score" },
-      { id: "webdevScore", title: "Web Development Score" },
-      { id: "reactScore", title: "React Score" },
-    ],
-  });
 
+module.exports.report = async (req, res) => {
   try {
     const students = await Student.find({});
+    const interviews = await Interview.find({}).populate("enrolledStudents");
 
-    const records = students.map((student) => ({
-      studentName: student.studentName,
-      studentEmail: student.studentEmail,
-      studentCollege: student.studentCollege,
-      placementStatus: student.placementStatus,
-      batchInput: student.batchInput,
-      dsaScore: student.dsaScore,
-      webdevScore: student.webdevScore,
-      reactScore: student.reactScore,
-    }));
+    const reportData = [];
 
-    await csvWriter.writeRecords(records);
+    students.forEach((student) => {
+      let studentDetails = {
+        Name: student.studentName,
+        Email: student.studentEmail,
+        College: student.studentCollege,
+        placementStatus: student.placementStatus,
+        batchInput: student.batchInput,
+        dsaScore: student.dsaScore,
+        webdevScore: student.webdevScore,
+        reactScore: student.reactScore,
+      };
 
-    res.download("student_details.csv");
-  } catch (error) {
-    console.log("Error generating CSV file:", error);
-    res.status(500).send("Internal Server Error");
+      let results = [];
+      interviews.forEach((interview) => {
+        interview.enrolledStudents.forEach((enrolledStudent) => {
+          if (enrolledStudent.student == student.id) {
+            const interviewResult = {
+              companyName: interview.companyName,
+              result: enrolledStudent.result,
+            };
+            results.push(interviewResult);
+          }
+        });
+      });
+
+      if (results.length > 0) {
+        let interviewInfo = {};
+        results.forEach((result, index) => {
+          interviewInfo[`companyName-${index}`] = result.companyName;
+          interviewInfo[`result-${index}`] = result.result;
+        });
+        studentDetails = { ...studentDetails, ...interviewInfo };
+      }
+
+      results = [];
+      reportData.push(studentDetails);
+    });
+
+    const csv = json2csv(reportData);
+
+    fs.writeFileSync("data.csv", csv, (err) => {
+      if (err) console.log(err);
+      else {
+        console.log("CSV file is saved");
+      }
+    });
+
+    // Set the file path
+    const filePath = path.join(__dirname, "../data.csv");
+
+    // Download the CSV file
+    res.download(filePath, "report.csv");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Error generating report",
+      error: err.message,
+    });
   }
 };
-
-// Assuming the 'csvWriter' variable is already defined with appropriate configuration
