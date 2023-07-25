@@ -1,4 +1,4 @@
-const db = require("./config/mongoose");
+const connectDB = require("./config/mongoose.js");
 const express = require("express");
 const port = 8080;
 const path = require("path");
@@ -11,6 +11,8 @@ const passportLocal = require("./config/passport-local-startegy");
 const MongoStore = require("connect-mongo");
 
 //required for flash messages
+
+connectDB();
 
 app.use(express.urlencoded());
 app.use(cookieParser());
