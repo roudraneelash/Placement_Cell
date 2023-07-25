@@ -1,4 +1,4 @@
-const connectDB = require("./config/mongoose.js");
+const connectDB = require("./config/mongoose");
 const express = require("express");
 const port = 8080;
 const path = require("path");
