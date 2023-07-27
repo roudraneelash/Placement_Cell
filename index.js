@@ -43,7 +43,7 @@ app.use(
     },
     store: new MongoStore(
       {
-        mongoUrl: "mongodb://127.0.0.1/placement-cell",
+        mongoUrl: process.env.MONGO_URI,
         autoRemove: "disabled",
       },
       function (err) {
