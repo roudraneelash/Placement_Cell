@@ -17,7 +17,7 @@ module.exports.create = async (req, res) => {
   try {
     const newInterview = await Interview.create(req.body);
     if (newInterview) {
-      console.log("interview created successfully");
+      req.flash("success", "interview created successfully");
     }
   } catch (err) {
     console.log(err);
@@ -50,7 +50,7 @@ module.exports.updateResult = async (req, res) => {
     const interview = await Interview.findById(interviewId);
 
     if (!interview) {
-      console.log("Interview not found");
+      req.flash("error", "Interview not found");
       return res.redirect("back");
     }
 
@@ -60,7 +60,7 @@ module.exports.updateResult = async (req, res) => {
     );
 
     if (!enrolledStudent) {
-      console.log("Enrolled student not found");
+      req.flash("error", "Enrolled student not found");
       return res.redirect("back");
     }
 
@@ -73,7 +73,7 @@ module.exports.updateResult = async (req, res) => {
     // console.log("Enrolled student status updated");
     return res.redirect("back");
   } catch (err) {
-    console.log("Error updating enrolled student status:", err);
+    req.flash("error", "Error updating enrolled student status:");
     return res.redirect("back");
   }
 };
@@ -100,13 +100,13 @@ module.exports.enroll = async (req, res) => {
         await interview.save();
         return res.redirect("back");
       } else {
-        console.log("No student found. Please enter a valid email id.");
+        req.flash("error", "No student found. Please enter a valid email id.");
       }
     } else {
-      console.log("Interview not found.");
+      req.flash("error", "Interview not found.");
     }
   } catch (err) {
-    console.log("Error in enrolling student:", err);
+    req.flash("error", "Error in enrolling student:");
   }
   return res.redirect("back");
 };

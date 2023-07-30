@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,8 +25,35 @@
     <%- style %>
     <title>Document</title>
   </head>
+  <body>
+    <%- include("__header")%>
+    <main><%-body%></main>
+    <%- include('__footer')%> <%- script %>
 
-  <%- include("__header")%> <%-body%> <%- include('__footer')%> <%- script %>
+    <script>
+      <% if (flash.success && flash.success.length > 0) {%>
+          new Noty({
+              theme: 'relax',
+              text: "<%= flash.success %>",
+              type: 'success',
+              layout: 'topRight',
+              timeout: 1500
+
+          }).show();
+      <%} %>
+
+      <% if (flash.error && flash.error.length > 0) {%>
+          new Noty({
+              theme: 'sunset',
+              text: "<%= flash.error %>",
+              type: 'error',
+              layout: 'topRight',
+              timeout: 1000
+          }).show();
+      <%} %>
+    </script>
+  </body>
+
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

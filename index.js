@@ -10,7 +10,8 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("./config/passport-local-startegy");
 const MongoStore = require("connect-mongo");
-
+const flash = require("connect-flash");
+const customMware = require("./config/middleware");
 //required for flash messages
 dotenv.config();
 connectDB();
@@ -59,6 +60,9 @@ app.use(passport.session());
 
 //set the authenticated user in locals
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(customMware.setFlash);
 
 app.use("/", require("./routes"));
 app.listen(port, () => {

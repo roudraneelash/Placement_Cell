@@ -7,7 +7,7 @@ module.exports.home = async (req, res) => {
       students: students,
     });
   } catch (err) {
-    console.log("an error occured in fetching students", err);
+    req.flash("error", "an error occured in fetching students");
   }
 };
 module.exports.addNew = (req, res) => {
@@ -30,11 +30,11 @@ module.exports.create = async (req, res) => {
 
     const existingStudent = await Student.findOne({ studentEmail });
     if (existingStudent) {
-      console.log("Student already exists with the same email");
+      req.flash("error", "Student already exists with the same email");
     } else {
       const newStudent = await Student.create(req.body);
       if (newStudent) {
-        console.log("Student created");
+        req.flash("success", "Student created");
       }
     }
   } catch (error) {
@@ -54,7 +54,7 @@ module.exports.edit = async (req, res) => {
       student: student,
     });
   } catch (err) {
-    console.log("error in finding student");
+    req.flash("error", "error in finding student");
   }
 };
 
@@ -63,11 +63,11 @@ module.exports.delete = async (req, res) => {
     // Perform the deletion operation in the database using the provided studentId
     const deleteStudent = await Student.findByIdAndDelete(req.params.id);
     if (deleteStudent) {
-      console.log("successfully deleted");
+      req.flash("success", "successfully deleted");
     }
     return res.redirect("/students");
   } catch (err) {
-    console.log("error in deleting student");
+    req.flash("error", "error in deleting student");
   }
   return res.redirect("/");
 };
@@ -84,14 +84,14 @@ module.exports.update = async (req, res) => {
     });
 
     if (result) {
-      console.log("Student updated:", result);
+      req.flash("success", "Student updated:");
       res.redirect("/students"); // Redirect to the student list page after successful update
     } else {
-      console.log("Student not found");
+      req.flash("error", "Student not found");
       res.redirect("/students"); // Redirect to the student list page if the student is not found
     }
   } catch (err) {
-    console.error("Error updating student:", err);
+    req.flash("error", "Error updating student:");
     res.redirect("/students"); // Redirect to the student list page in case of an error
   }
 };

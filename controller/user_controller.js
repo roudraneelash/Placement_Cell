@@ -1,21 +1,22 @@
 const User = require("../model/user");
-
+//render login
 module.exports.login = (req, res) => {
-  console.log(req.body);
   return res.render("user_login");
 };
+//render signup
 module.exports.signUp = (req, res) => {
   return res.render("user_signUp");
 };
+//render profile page
 module.exports.profile = (req, res) => {
   return res.render("user_profile");
 };
-
+//create a new user
 module.exports.create = async (req, res) => {
   try {
     //check if the  password entered and confirm password is matching
     if (req.body.password != req.body.confirm_password) {
-      // req.flash("error", "Passwords do not match");
+      req.flash("error", "Passwords do not match");
       return res.redirect("back");
     }
 
@@ -34,7 +35,8 @@ module.exports.create = async (req, res) => {
         });
 
         if (newUser) {
-          console.log("user created successfully");
+          req.flash("success", "user created successfully");
+          req.flash("success", "Please login");
           return res.redirect("/user/login");
         }
       }
@@ -48,9 +50,9 @@ module.exports.create = async (req, res) => {
 
   return res.redirect("back");
 };
+// Log in and create a session for the user
 module.exports.createSession = (req, res) => {
-  // console.log(req.body);
-  // res.cookie("user_id", req.body.email);
+  req.flash("success", "Logged In Successfully");
   return res.redirect("/");
 };
 module.exports.destroySession = (req, res) => {
@@ -58,6 +60,7 @@ module.exports.destroySession = (req, res) => {
     if (err) {
       return next(err);
     }
+    req.flash("success", "Logged out Successfully");
     res.redirect("/user/login");
   });
 };
